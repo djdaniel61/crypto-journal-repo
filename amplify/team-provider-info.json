@@ -1,0 +1,21 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amplifyfb4adfbe39824-staging-123745-authRole",
+      "UnauthRoleArn": "arn:aws:iam::660098506083:role/amplify-amplifyfb4adfbe39824-staging-123745-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::660098506083:role/amplify-amplifyfb4adfbe39824-staging-123745-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-amplifyfb4adfbe39824-staging-123745-deployment",
+      "UnauthRoleName": "amplify-amplifyfb4adfbe39824-staging-123745-unauthRole",
+      "StackName": "amplify-amplifyfb4adfbe39824-staging-123745",
+      "StackId": "arn:aws:cloudformation:eu-central-1:660098506083:stack/amplify-amplifyfb4adfbe39824-staging-123745/a3a44b80-d80d-11eb-bf0d-02285a8584fc",
+      "AmplifyAppId": "d1olfyzmyrvera",
+      "AuthTriggerTemplateURL": ""
+    },
+    "categories": {
+      "auth": {
+        "cryptojournalrepo": {}
+      }
+    }
+  }
+}

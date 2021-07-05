@@ -1,0 +1,46 @@
+nav {
+  background: rgb(215, 250, 232);
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+
+  z-index: 1000;
+}
+
+.navbar-container {
+  height: 80px;
+  top: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-menu {
+  list-style: none;
+  text-align: center;
+  width: 60vw;
+  justify-content: center;
+}
+
+.nav-links,
+.navbar-logo {
+  padding: 8px 16px;
+  font-size: 1.5rem;
+  text-decoration: none;
+  text-transform: capitalize;
+  vertical-align: middle;
+  padding-top: 24px !important;
+  padding-bottom: 24px !important;
+  cursor: pointer;
+}
+
+.navbar-logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.nav-links {
+  display: flex;
+}
