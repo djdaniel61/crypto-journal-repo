@@ -11,6 +11,10 @@ const Navbarfinal = () => {
   const toggleMenu = () => {
     setShowLinks(!showLinks);
   };
+  const closeMobileMenu = () => {
+    setShowLinks(false);
+  };
+
   useEffect(() => {
     const linksHeight = linksRef.current.getBoundingClientRect().height;
     if (showLinks) {
@@ -34,7 +38,9 @@ const Navbarfinal = () => {
               const { id, destination, linkName } = link;
               return (
                 <li key={id}>
-                  <Link to={destination}>{linkName}</Link>
+                  <Link to={destination} onClick={closeMobileMenu}>
+                    {linkName}
+                  </Link>
                 </li>
               );
             })}

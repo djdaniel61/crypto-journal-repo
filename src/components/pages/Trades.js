@@ -1,12 +1,13 @@
 import React from 'react';
 import '../../App.css';
-import Content from '../Content';
+import GetTrades from '../GetTrades';
+import NewTrade from '../NewTrade';
 
 function Trades() {
   return (
     <>
-      <h1>Trades</h1>
-      <Content />
+      {/* <NewTrade /> */}
+      <GetTrades />
     </>
   );
 }

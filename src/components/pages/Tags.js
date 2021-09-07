@@ -1,12 +1,15 @@
 import React from 'react';
 import '../../App.css';
-import Content from '../Content';
+import GetTags from '../GetTags';
 
 function Tags() {
   return (
     <>
-      <h1>Tags</h1>
-      <Content />
+      <br />
+      <br />
+      <h2>Tags</h2>
+      <h4>Manage all your tags here</h4>
+      <GetTags />
     </>
   );
 }

@@ -1,0 +1,94 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'PT Sans', sans-serif;
+}
+
+.page-content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+/* ############ Trades Page ############ */
+
+/* ##### Form ##### */
+form {
+  display: grid;
+  grid-template-columns: 30% 20% 30% 20%;
+}
+
+.form-save {
+  grid-column: 4;
+  background-color: rgba(156, 182, 184, 100);
+  margin: 2px;
+  border-radius: 3px;
+  border-color: rgba(156, 182, 184, 100);
+  color: black;
+}
+
+.form-save:hover {
+  color: white;
+  background-color: rgba(20, 82, 79, 100);
+  border-color: rgba(20, 82, 79, 100);
+}
+
+.return-button {
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.return-button:hover {
+  border: none;
+  color: rgba(20, 82, 79, 100);
+}
+
+.wide-label {
+  grid-column: span 4;
+}
+
+.comments-input {
+  grid-column: span 4;
+  height: 200px;
+  padding: 12px 20px;
+  resize: none;
+}
+
+.disabled-input {
+  padding: 5px;
+  margin: 3px;
+}
+
+/* ##### Tags ##### */
+.tags-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.tags-table {
+  padding: 5px;
+}
+
+.tags-save-button {
+  grid-column: 2;
+  background-color: rgba(156, 182, 184, 100);
+  margin: 2px;
+  border-radius: 3px;
+  border-color: rgba(156, 182, 184, 100);
+  color: black;
+}
+
+.tags-save-button:hover {
+  color: white;
+  background-color: rgba(20, 82, 79, 100);
+  border-color: rgba(20, 82, 79, 100);
+}
+
+.tags-add-button {
+  grid-column: 2;
+  background-color: rgba(156, 182, 184, 100);
+  margin: 2px;
+  border-radius: 3px;
+  border-color: rgba(156, 182, 184, 100);
+  color: black;
+  padding: 0px 5px;
+}

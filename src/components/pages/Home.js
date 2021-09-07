@@ -5,7 +5,6 @@ import Content from '../Content';
 function Home() {
   return (
     <>
-      <h1>Home page</h1>
       <Content />
     </>
   );
