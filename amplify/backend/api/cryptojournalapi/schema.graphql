@@ -1,0 +1,42 @@
+type BybitAPI @model @auth(rules: [{allow: private}]) {
+  id: ID!
+  name: String!
+  secret: String!
+  apiKey: String!
+}
+
+type Trade @model @auth(rules: [{allow: private}]) {
+  id: ID!
+  user_id: String
+  symbol: String
+  qty: Float
+  order_type: String
+  exec_type: String
+  avg_entry_price: Float
+  cum_entry_value: Float
+  avg_exit_price: Float
+  tags: [TagTrade] @connection(keyName: "byTrade", fields: ["id"])
+  cum_exit_value: Float
+  closed_pnl: Float
+  side: String
+  created_at: Float
+  leverage: Float
+  comments: String
+  attachment: String
+}
+
+type Tag @model @auth(rules: [{allow: private}]) {
+  id: ID!
+  title: String!
+  description: String
+  TagTrades: [TagTrade] @connection(keyName: "byTag", fields: ["id"])
+}
+
+type TagTrade @model(queries: null) @key(name: "byTag", fields: ["tagID", "tradeID"]) @key(name: "byTrade", fields: ["tradeID", "tagID"]) @auth(rules: [{allow: private}, {allow: private}]) {
+  id: ID!
+  tagID: ID!
+  tradeID: ID!
+  tag: Tag! @connection(fields: ["tagID"])
+  trade: Trade! @connection(fields: ["tradeID"])
+}
+ 
