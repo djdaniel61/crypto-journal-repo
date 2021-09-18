@@ -28,6 +28,7 @@ const columnsApiTable = [
   }
 ];
 
+//creates sign using parameters and secret
 function getSignature(parameters, secret) {
   var orderedParams = '';
   Object.keys(parameters)
@@ -43,6 +44,7 @@ function getSignature(parameters, secret) {
     .digest('hex');
 }
 
+//takes id of api to be deleted
 async function deleteAPIByID(apiID, version) {
   try {
     await API.graphql(
@@ -57,6 +59,7 @@ async function deleteAPIByID(apiID, version) {
   }
 }
 
+//posts updated api fields to db
 async function updateAPIByID(apiID, APIData) {
   var editedAPIData = {
     id: apiID,
@@ -85,6 +88,7 @@ function GetClientAPIKey() {
     getClientAPIdata();
   }, [importStatus]);
 
+  //creates a trade in the db, used in fetch trades to add imported trades to apps db
   async function createTrade(trade) {
     var editedTradeData = {
       id: trade.id,
@@ -99,7 +103,7 @@ function GetClientAPIKey() {
       cum_exit_value: trade.cum_exit_value,
       closed_pnl: trade.closed_pnl,
       side: trade.side,
-      created_at: trade.created_at,
+      created_at: trade.created_at * 1000,
       leverage: trade.leverage,
       comments: trade.comments,
       attachment: trade.attachment
@@ -114,7 +118,7 @@ function GetClientAPIKey() {
       console.log('error creating trade...', err);
     }
   }
-
+  //creates a new row and posts new api item to db
   async function createAPIKey(newName, newAPI, newSecret) {
     const newInput = { name: newName, apiKey: newAPI, secret: newSecret };
 
@@ -125,7 +129,7 @@ function GetClientAPIKey() {
       console.log('error adding...', err);
     }
   }
-
+  //fetches trades from bybit, uses createTrade to add all to app
   const fetchTrades = async (apiKey, symbol, secret) => {
     var params = {
       api_key: apiKey,

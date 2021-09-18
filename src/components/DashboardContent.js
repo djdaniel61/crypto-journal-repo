@@ -35,6 +35,7 @@ function DashboardContent() {
   //   return () => clearInterval(interval);
   // }, []);
 
+  //fetches all trades
   async function getTrades() {
     try {
       const tradeData = await API.graphql(graphqlOperation(ListTrades));
@@ -48,7 +49,7 @@ function DashboardContent() {
       console.log('error fetching trades...', err);
     }
   }
-
+  //fetches all tags
   async function getTags() {
     try {
       const tagData = await API.graphql(graphqlOperation(ListTags));
@@ -65,7 +66,7 @@ function DashboardContent() {
       console.log('error fetching tags...', err);
     }
   }
-
+  //fetches all tagTrades that include the entered tag id
   async function getTagTrades(tag) {
     try {
       const getTagData = await API.graphql(
@@ -82,7 +83,7 @@ function DashboardContent() {
       console.log(error);
     }
   }
-
+  //fetch a trade by ID
   async function getTrade(trade) {
     try {
       const getTradeData = await API.graphql(
@@ -199,12 +200,12 @@ function DashboardContent() {
 
   // // ################### stats today calculations #########################
   function resolveDate(date) {
-    var dateFormated = new Date(date * 1000).toLocaleDateString('en-GB');
+    var dateFormated = new Date(parseFloat(date)).toLocaleDateString('en-GB');
     return dateFormated;
   }
 
   const tradesToday = trades.filter(
-    (trade) => resolveDate(trade.created_at) == resolveDate(Date.now() / 1000)
+    (trade) => resolveDate(trade.created_at) == resolveDate(Date.now())
   );
 
   const numberTradesToday = tradesToday.length;

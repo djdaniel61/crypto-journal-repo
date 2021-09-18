@@ -15,16 +15,7 @@ import { listTags as ListTags } from '../graphql/queries';
 import { createTagTrade as CreateTagTrade } from '../graphql/mutations';
 import { deleteTagTrade as DeleteTagTrade } from '../graphql/mutations';
 
-const columnsTags = [
-  {
-    title: 'Title',
-    field: 'title'
-  },
-  {
-    title: 'Description',
-    field: 'description'
-  }
-];
+// Columns for table of all trades
 const columns = [
   {
     title: 'Symbol',
@@ -39,11 +30,6 @@ const columns = [
     title: 'Side',
     field: 'side'
   },
-
-  // {
-  //   title: 'Order Type',
-  //   field: 'order_type'
-  // },
   {
     title: 'Entry Price',
     field: 'avg_entry_price',
@@ -68,16 +54,33 @@ const columns = [
     type: 'numeric'
   },
   {
-    title: 'Date',
+    title: 'Trade Closed On',
     field: 'created_at',
+    type: 'datetime',
     render: (rowData) => resolveDate(rowData.created_at)
   }
 ];
+//Columns for table of tags that can be added and removed from a trade
+const columnsTags = [
+  {
+    title: 'Title',
+    field: 'title'
+  },
+  {
+    title: 'Description',
+    field: 'description'
+  }
+];
 
+//takes a unix timestamp and returns a string of the date + time
 function resolveDate(date) {
-  var dateFormated = new Date(date * 1000).toLocaleDateString('en-GB');
-  return dateFormated;
+  var convertedDate = parseFloat(date);
+  var dateFormated = new Date(convertedDate).toLocaleDateString('en-GB');
+  var timeFormated = new Date(convertedDate).toLocaleTimeString('en-GB');
+  return `${dateFormated} ${timeFormated}`;
 }
+
+//takes a float and returns float with a "decimal" number of significant numbers
 function resolvePrice(decimals, price) {
   if (price) {
     var newPrice = price.toFixed(decimals);
@@ -87,14 +90,22 @@ function resolvePrice(decimals, price) {
 }
 
 const GetTrades = () => {
+  //custom hook for prefilling the form when selecting "Journal Trade" from the Trades table
   const { register, handleSubmit, reset } = useForm();
+  //state for storing all trades
   const [trades, setTrades] = useState([]);
+  //state for all tags
   const [tags, setTags] = useState([]);
+  //state for tags that have been added to a trade
   const [selectedTags, setSelectedTags] = useState([]);
+  //state for selected row when any action is performed on the trade table
   const [currentRow, setCurrentRow] = useState([]);
+  //toggles view for table of all trades/form
   const [showForm, setShowForm] = useState(false);
+  //toggles visibility of tags tables
   const [showTagsContainer, setShowTagsContainer] = useState(false);
 
+  //columns for tags table
   const tagsTags = [
     {
       title: 'Tag',
@@ -107,16 +118,19 @@ const GetTrades = () => {
       render: (rowData) => resolveTagDescription(rowData.tagID)
     }
   ];
+
   useEffect(() => {
     getData();
     getTags();
   }, []);
 
+  //updates selectedTags state when a new trade is being edited
   useEffect(() => {
     reset(currentRow);
     getTradeTags(currentRow.id);
   }, [currentRow]);
 
+  //takes tag ID, returns tag's decription
   function resolveTagDescription(id) {
     var resolvedTag;
     tags.map((tag) => {
@@ -126,6 +140,7 @@ const GetTrades = () => {
     });
     return resolvedTag;
   }
+  //takes tag ID, returns tag's title
   function resolveTagID(id) {
     var resolvedTag;
     tags.map((tag) => {
@@ -135,6 +150,7 @@ const GetTrades = () => {
     });
     return resolvedTag;
   }
+  //posts updated trade data
   function createJournal() {
     console.log(currentRow);
 
@@ -161,6 +177,7 @@ const GetTrades = () => {
 
     setShowForm(!showForm);
   }
+  //takes a trade ID and version to be deleted
   async function deleteTradeByID(tradeID, version) {
     try {
       await API.graphql(
@@ -174,6 +191,7 @@ const GetTrades = () => {
       console.log(tradeID, version);
     }
   }
+  //used in createJournal() to send data to db
   async function updateTradeByID(tradeID, tradeData) {
     var editedTradeData = {
       id: tradeID,
@@ -188,7 +206,7 @@ const GetTrades = () => {
       cum_exit_value: tradeData.cum_exit_value,
       closed_pnl: tradeData.closed_pnl,
       side: tradeData.side,
-      created_at: tradeData.created_at,
+      created_at: Date.parse(`${tradeData.created_at}`),
       leverage: tradeData.leverage,
       comments: tradeData.comments,
       attachment: tradeData.attachment,
@@ -217,6 +235,8 @@ const GetTrades = () => {
   //   qty: newData.qty,
   //   };
   //   }
+
+  //on load fetches all tags
   async function getTags() {
     try {
       const tagData = await API.graphql(graphqlOperation(ListTags));
@@ -230,6 +250,7 @@ const GetTrades = () => {
       console.log('error fetching tags...', err);
     }
   }
+  //on load fetches all trades
   async function getData() {
     try {
       const tradeData = await API.graphql(graphqlOperation(ListTrades));
@@ -243,6 +264,7 @@ const GetTrades = () => {
       console.log('error fetching trades...', err);
     }
   }
+  //takes trade id and tag id, creates a TagTrade item
   async function addTag(tag, trade) {
     var inputData = { tagID: tag, tradeID: trade };
     console.log(inputData);
@@ -257,19 +279,21 @@ const GetTrades = () => {
       console.log(error);
     }
   }
+  //takes a tagTrade id and version to be deleted
   async function removeTag(tagID, version) {
     var inputData = { id: tagID, _version: version };
     try {
-      const addedTag = await API.graphql(
+      const removedTag = await API.graphql(
         graphqlOperation(DeleteTagTrade, {
           input: inputData
         })
       );
-      console.log(addedTag);
+      console.log(removedTag);
     } catch (error) {
       console.log(error);
     }
   }
+  //returns all tags added to a trade
   async function getTradeTags(trade) {
     try {
       const getTradeData = await API.graphql(

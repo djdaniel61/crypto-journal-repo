@@ -19,7 +19,7 @@ type Trade @model @auth(rules: [{allow: private}]) {
   cum_exit_value: Float
   closed_pnl: Float
   side: String
-  created_at: Float
+  created_at: String
   leverage: Float
   comments: String
   attachment: String

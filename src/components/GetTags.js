@@ -7,6 +7,7 @@ import { createTag as CreateTag } from '../graphql/mutations';
 import { API, graphqlOperation } from 'aws-amplify';
 import MaterialTable from 'material-table';
 
+//columns for material table used for tags
 const columns = [
   {
     title: 'Title',
@@ -25,6 +26,7 @@ const GetTags = () => {
     getData();
   }, []);
 
+  //deletes all tag by id
   async function deleteTagByID(tagID, version) {
     try {
       await API.graphql(
@@ -39,6 +41,7 @@ const GetTags = () => {
     }
   }
 
+  //updates edited tag
   async function updateTagByID(tagID, tagData) {
     var editedTagData = {
       id: tagID,
@@ -55,6 +58,7 @@ const GetTags = () => {
     }
   }
 
+  //fetches all tags
   async function getData() {
     try {
       const tagData = await API.graphql(graphqlOperation(ListTags));
@@ -69,6 +73,7 @@ const GetTags = () => {
     }
   }
 
+  //creates tag item
   async function createTag(tagTitle, tagDescription) {
     const tagInput = {
       title: tagTitle,

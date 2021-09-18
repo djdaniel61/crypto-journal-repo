@@ -29,7 +29,7 @@ export declare class Trade {
   readonly cum_exit_value?: number;
   readonly closed_pnl?: number;
   readonly side?: string;
-  readonly created_at?: number;
+  readonly created_at?: string;
   readonly leverage?: number;
   readonly comments?: string;
   readonly attachment?: string;

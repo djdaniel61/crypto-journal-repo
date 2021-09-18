@@ -5,6 +5,7 @@ import DashboardContent from '../DashboardContent';
 function Dashboard() {
   return (
     <>
+      <br />
       <h2>Dashboard</h2>
       <DashboardContent />
     </>

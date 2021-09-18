@@ -177,7 +177,7 @@ export const schema = {
                 "created_at": {
                     "name": "created_at",
                     "isArray": false,
-                    "type": "Float",
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -436,5 +436,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "8ad95eec1e7a8601fa27a065c34c092f"
+    "version": "ebde51adb72081cbdb1cea24cf2564ff"
 };
